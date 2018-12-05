@@ -8,3 +8,13 @@ C:\Users\Giro\source\repos\Searcher\Searcher\obj\Debug\Searcher.csproj.GenerateR
 C:\Users\Giro\source\repos\Searcher\Searcher\obj\Debug\Searcher.csproj.CoreCompileInputs.cache
 C:\Users\Giro\source\repos\Searcher\Searcher\obj\Debug\Searcher.exe
 C:\Users\Giro\source\repos\Searcher\Searcher\obj\Debug\Searcher.pdb
+C:\Users\nikit\source\repos\Searcher\Searcher\bin\Debug\Searcher.exe.config
+C:\Users\nikit\source\repos\Searcher\Searcher\bin\Debug\Searcher.exe
+C:\Users\nikit\source\repos\Searcher\Searcher\bin\Debug\Searcher.pdb
+C:\Users\nikit\source\repos\Searcher\Searcher\obj\Debug\Searcher.csprojAssemblyReference.cache
+C:\Users\nikit\source\repos\Searcher\Searcher\obj\Debug\Searcher.Form1.resources
+C:\Users\nikit\source\repos\Searcher\Searcher\obj\Debug\Searcher.Properties.Resources.resources
+C:\Users\nikit\source\repos\Searcher\Searcher\obj\Debug\Searcher.csproj.GenerateResource.cache
+C:\Users\nikit\source\repos\Searcher\Searcher\obj\Debug\Searcher.csproj.CoreCompileInputs.cache
+C:\Users\nikit\source\repos\Searcher\Searcher\obj\Debug\Searcher.exe
+C:\Users\nikit\source\repos\Searcher\Searcher\obj\Debug\Searcher.pdb

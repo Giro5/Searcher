@@ -48,7 +48,8 @@ namespace Searcher
             {
                 try
                 {
-                    imageList1.Images.Add(Image.FromFile(everything[i]));
+                    //imageList1.Images.Add(Image.FromFile(everything[i]));
+                    imageList1.Images.Add(Icon.ExtractAssociatedIcon(everything[i]));
                     listView1.Items.Add(new ListViewItem(everything[i].Split('\\').Last(), ii));
                     ii++;
                 }
