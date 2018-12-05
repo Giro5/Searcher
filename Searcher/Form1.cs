@@ -14,7 +14,7 @@ namespace Searcher
 {
     public partial class Form1 : Form
     {
-        string[] icotypes = new string[] { "jpg", "png", "ico", "bmp", "mp4", };
+        string[] icotypes = new string[] { "jpg", "png", "ico", "bmp", "jpeg", "gif" };
         string path = "", filter = "", NameTitle = "Searcher";
         string[] everything = new string[0];
         int selfile = -1;
@@ -24,10 +24,12 @@ namespace Searcher
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             path = textBox1.Text;
-            filter = textBox2.Text == "" ? "*.*" : textBox2.Text;
+            if (textBox2.Text == "")
+                textBox2.Text = "*.*";
+            filter = textBox2.Text;
             if (!Directory.Exists(path))
             {
                 MessageBox.Show("Not An Existing Path", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -37,31 +39,35 @@ namespace Searcher
             }
             DirectoryInfo dir = new DirectoryInfo(path);
             Array.Clear(everything, 0, everything.Length);
-            everything = dir.EnumerateFiles(filter, SearchOption.AllDirectories)
-                            .Select(x => x.FullName)
-                            .ToArray();
+            everything = dir.EnumerateFiles(filter, SearchOption.AllDirectories).Select(x => x.FullName).ToArray();
             listView1.Clear();
             imageList1.Images.Clear();
-            int step = 1000 / everything.Length;
+            progressBar1.Maximum = everything.Length;
             progressBar1.Value = 0;
+            await AddingItems();
+        }
+
+        private Task AddingItems()
+        {
             for (int i = 0, ii = 0; i < everything.Length; i++)
             {
-                try
+                if (everything[i].Contains(".") && icotypes.Any(x => x == everything[i].Split('.').Last().ToLower()))
                 {
-                    //imageList1.Images.Add(Image.FromFile(everything[i]));
+                    imageList1.Images.Add(Image.FromFile(everything[i]));
+                    listView1.Items.Add(new ListViewItem(everything[i].Split('\\').Last(), ii));
+                    ii++;
+                }
+                else
+                {
                     imageList1.Images.Add(Icon.ExtractAssociatedIcon(everything[i]));
                     listView1.Items.Add(new ListViewItem(everything[i].Split('\\').Last(), ii));
                     ii++;
                 }
-                catch
-                {
-                    listView1.Items.Add(new ListViewItem(everything[i].Split('\\').Last()));
-                }
-                if(progressBar1.Value + step <= 1000)
-                    progressBar1.Value += step;
+                progressBar1.Value++;
             }
             Text = NameTitle + " - " + everything.Length.ToString() + " items";
             progressBar1.Value = 0;
+            return Task.CompletedTask;
         }
 
         private void flagBtn_Click(object sender, EventArgs e)
@@ -72,8 +78,21 @@ namespace Searcher
             }
         }
 
+        private void button1_MouseHover(object sender, EventArgs e)
+        {
+            if (textBox2.Text == "")
+                textBox2.Text = "*.*";
+        }
+
+        private void textBox2_Leave(object sender, EventArgs e)
+        {
+            if (textBox2.Text == "")
+                textBox2.Text = "*.*";
+        }
+
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
+            
             Process.Start(everything[selfile]);
         }
 
