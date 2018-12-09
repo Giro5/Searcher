@@ -14,7 +14,7 @@ namespace Searcher
 {
     public partial class Form1 : Form
     {
-        string[] icotypes = new string[] { "jpg", "png", "ico", "bmp", "jpeg", "gif" };
+        string[] icotypes = new string[] { "jpg", "png", "bmp", "jpeg", "gif" };
         string path = "", filter = "", NameTitle = "Searcher";
         string[] everything = new string[0];
         int selfile = -1;
@@ -49,13 +49,23 @@ namespace Searcher
 
         private Task AddingItems()
         {
+            bool memory = true;
             for (int i = 0, ii = 0; i < everything.Length; i++)
             {
-                if (everything[i].Contains(".") && icotypes.Any(x => x == everything[i].Split('.').Last().ToLower()))
+                if (memory && everything[i].Contains(".") && icotypes.Any(x => x == everything[i].Split('.').Last().ToLower()))
                 {
-                    imageList1.Images.Add(Image.FromFile(everything[i]));
-                    listView1.Items.Add(new ListViewItem(everything[i].Split('\\').Last(), ii));
-                    ii++;
+                    try
+                    {
+                        imageList1.Images.Add(Image.FromFile(everything[i]));
+                        listView1.Items.Add(new ListViewItem(everything[i].Split('\\').Last(), ii));
+                        ii++;
+                    }
+                    catch (OutOfMemoryException)
+                    {
+                    memory = false;
+                    i--;
+                    continue;
+                    }
                 }
                 else
                 {
